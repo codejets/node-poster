@@ -1,3 +1,7 @@
+"use strict";
+
+const fs = require("fs");
+const poster = require('./poster');
 
 function convertAllImagesToThumbnails() {
   const allThumbs = fs.readdirSync(__dirname + '/authors-avatar')

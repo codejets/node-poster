@@ -21,24 +21,38 @@ function createPoster(source, options, authorId, filename) {
 
 			console.log("author", source.author, authorId, filename);
 			const randomImage = getRandomImage(images);
-
-			const outImage = gm(__dirname + "/images/" + randomImage)
-				.draw([
-					`image over 720,330 60,60 "${__dirname}/uploads/circle_user_${authorId}_200.png"`
-				])
-				.font(`${__dirname}/font/PN-Semibold.otf`, 30)
+			if(authorId > 201) {
+				const outImage = gm(__dirname + "/images/" + randomImage)
+				.draw(`image over 1180,460 210,45 "${__dirname}/assets/logo.png"`)
 				.fill("#ffffff")
-				.region(1440, 350)
-				.gravity("Center")
-				.drawText(30, 50, computeMultilineQuote(source.quote))
-				.font(`${__dirname}/Proxima/ProximaNova-Semibold.otf`, 22)
 				.region(1440, 450)
 				.gravity("Center")
-				.drawText(30, 200, source.author)
+				.font(`${__dirname}/font/PN-Semibold.otf`, 22)
+				.drawText(30, 180, source.author)
+				.region(1440, 450)
 				.gravity("Center")
-				.write(`${__dirname}/build/${filename}.png`, function(err) {
-					if (!err) console.log("done");
+				.font(`${__dirname}/font/PN-Semibold.otf`, 30)
+				.drawText(30, 0, computeMultilineQuote(source.quote))
+				.write(`${__dirname}/build/${filename}.png`, function(err, image, a) {
+					if (!err) console.log("done", image);
 				});
+			}else {
+			const outImage = gm(__dirname + "/images/" + randomImage)
+				.draw(`image over 720,320 60,60 "${__dirname}/uploads/circle_user_${authorId}_200.png"`)
+				.draw(`image over 1180,460 210,45 "${__dirname}/assets/logo.png"`)
+				.fill("#ffffff")
+				.region(1440, 450)
+				.gravity("Center")
+				.font(`${__dirname}/font/PN-Semibold.otf`, 22)
+				.drawText(30, 180, source.author)
+				.region(1440, 450)
+				.gravity("Center")
+				.font(`${__dirname}/font/PN-Semibold.otf`, 30)
+				.drawText(30, 0, computeMultilineQuote(source.quote))
+				.write(`${__dirname}/build/${filename}.png`, function(err, image, a) {
+					if (!err) console.log("done", image);
+				});
+			}
 		}
 	});
 }

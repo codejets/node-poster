@@ -1,7 +1,7 @@
 const csvjson = require('csvjson');
 const fs = require('fs');
 const path = require('path');
-const poster = require('./create-poster');
+const poster = require('./poster');
 
 const options = { delimiter : ',', quote : '"' };
 
@@ -18,11 +18,20 @@ const transformedAuthors = authors.reduce(function(result, item, index, array) {
   return result;
 }, {}) 
 
-for (let index = 0; index < 60; index++) {
+for (let index = 0; index < 10; index++) {
   const element = quotes[index];
-  createPoster(element.quote, element.author, index, transformedAuthors[element.author])
+  createPoster(sanitizeQuote(element.quote), element.author, index, transformedAuthors[element.author])
 }
 
 function createPoster(quote, author, index, authorId) {
-  poster.createPoster({quote: '“ ' + quote + '”.', author:author}, { index: index }, authorId, `${quote.substring(0, 40).replace(/ /g,"_")}-${author.replace(/ /g,"_")}`);
+  poster.createPoster({quote: '“ ' + quote + '”.', author:author}, { index: index }, authorId, `${author.replace(/ /g,"_")}-${index}--Customer-service-quotes`);
+}
+
+function sanitizeQuote(quote) {
+    const lastString = quote.split("")[quote.length-1];
+    if(lastString === '.') {
+      return quote.substring(0, quote.length - 1) + " ";
+    }else {
+      return quote;
+    }
 }
