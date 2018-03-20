@@ -9,6 +9,7 @@
   "keywords": [],
   "author": "",
   "dependencies": {
+    "async": "^2.6.0",
     "circle-image": "^1.0.43",
     "csvjson": "^5.0.0",
     "gm": "^1.23.1",

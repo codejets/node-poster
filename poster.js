@@ -10,19 +10,13 @@ const gm = require("gm");
  * @param {Object}   options    poster options
  */
 function createPoster(source, options, authorId, filename) {
-	fs.readdir(__dirname + "/images", function(err, files) {
-		if (err) {
-			console.log(err);
-		} else {
-			var images = [];
-			files.forEach(function(f) {
-				images.push(f);
-			});
-
+	
 			console.log("author", source.author, authorId, filename);
-			const randomImage = getRandomImage(images);
+			const randomImageId = Math.floor(Math.random() * 64);
+
+			
 			if(authorId > 201) {
-				const outImage = gm(__dirname + "/images/" + randomImage)
+				const outImage = gm(__dirname + "/images/" + randomImageId+ '.jpg')
 				.draw(`image over 1180,460 210,45 "${__dirname}/assets/logo.png"`)
 				.fill("#ffffff")
 				.region(1440, 450)
@@ -37,7 +31,7 @@ function createPoster(source, options, authorId, filename) {
 					if (!err) console.log("done", image);
 				});
 			}else {
-			const outImage = gm(__dirname + "/images/" + randomImage)
+			const outImage = gm(__dirname + "/images/" + randomImageId+ '.jpg')
 				.draw(`image over 720,320 60,60 "${__dirname}/uploads/circle_user_${authorId}_200.png"`)
 				.draw(`image over 1180,460 210,45 "${__dirname}/assets/logo.png"`)
 				.fill("#ffffff")
@@ -53,8 +47,6 @@ function createPoster(source, options, authorId, filename) {
 					if (!err) console.log("done", image);
 				});
 			}
-		}
-	});
 }
 
 function createThumbnail(source, index, size) {
